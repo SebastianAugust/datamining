@@ -1,0 +1,5 @@
+var1,var2,corr
+heater_power_kw,co_ppm,0.99099654940093
+pressure_kpa,leak_risk_score,0.8842801448089934
+o2_pct,co2_ppm,-0.8487635814163957
+room_occupancy_index,o2_pct,-0.7928836459424409
