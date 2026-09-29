@@ -45,7 +45,7 @@ print("===========================================")
 # ============================================================   
 # Dari analisis sebelumnya: sensor_15 kosong 100%, sensor_50 kosong ~35%
 
-cols_to_drop = ["sensor_15", "sensor_50", "machine_status"]
+cols_to_drop = ["Unnamed: 0", "sensor_15", "sensor_50", "machine_status"]
 df = df.drop(columns=cols_to_drop, errors='ignore')
 
 print("===========================================")
