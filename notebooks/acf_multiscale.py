@@ -23,12 +23,11 @@ from statsmodels.graphics.tsaplots import plot_acf
 # ============================================================
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent   # root project (bisa dijalankan dari folder mana saja)
-DATASET_PATH = BASE_DIR / "data" / "Industrial_IOT_Dataset.csv"
+DATASET_PATH = BASE_DIR / "data" / "cleaned_sensor.csv"
 FIG_DIR = BASE_DIR / "outputs" / "figures"          # gambar .png
 TABLE_DIR = BASE_DIR / "outputs" / "tables"         # tabel .csv / .txt
 
-SENSORS = ['ambient_temp_c', 'heater_power_kw', 'vibration_axis1_mm_s',
-           'gas_raw_sensor1_mv', 'co2_ppm']
+SENSORS = ['sensor_00', 'sensor_01', 'sensor_02', 'sensor_03', 'sensor_04']
 SCALES = {'1m': '1min', '5m': '5min', '15m': '15min', '30m': '30min', '60m': '60min'}
 MAX_LAG = 24     # dalam satuan skala waktu masing-masing (bukan menit)
 ALPHA = 0.05     # interval kepercayaan 95%
@@ -37,7 +36,7 @@ ALPHA = 0.05     # interval kepercayaan 95%
 # 1. LOAD DATA, timestamp -> index datetime
 # ============================================================
 df = pd.read_csv(DATASET_PATH)
-time_col = 'timestamp_index' if 'timestamp_index' in df.columns else 'timestamp'
+time_col = 'timestamp'
 df[time_col] = pd.to_datetime(df[time_col])
 df = df.set_index(time_col).sort_index()
 

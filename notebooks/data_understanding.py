@@ -1,17 +1,17 @@
 """
-Tahap 2: Data Understanding & Preprocessing Plan
-UTS Data Mining - Analisis Karakteristik Data Sensor Industrial IoT
+    Tahap 2: Data Understanding & Preprocessing Plan
+    UTS Data Mining - Analisis Karakteristik Data Sensor Industrial IoT
 
-Cara pakai:
-    pip install pandas matplotlib seaborn numpy scikit-learn
-    python notebooks/data_understanding.py
+    Cara pakai:
+        pip install pandas matplotlib seaborn numpy scikit-learn
+        python notebooks/data_understanding.py
 
 """
 
 import pandas as pd
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # non-interactive backend, aman buat run tanpa GUI
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
@@ -22,7 +22,7 @@ from sklearn.decomposition import PCA
 # ============================================================
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent   # root project (bisa dijalankan dari folder mana saja)
-DATASET_PATH = BASE_DIR / "data" / "Industrial_IOT_Dataset.csv"
+DATASET_PATH = BASE_DIR / "data" / "cleaned_sensor.csv"
 FIG_DIR = BASE_DIR / "outputs" / "figures"          # gambar .png
 TABLE_DIR = BASE_DIR / "outputs" / "tables"         # tabel .csv / .txt
 
@@ -142,7 +142,7 @@ print()
 # 5. DATA OVERVIEW
 #    -> ukuran data, tipe data, missing values, duplikat, keteraturan timestamp
 # ============================================================
-TIME_COL = 'timestamp_index'
+TIME_COL = 'timestamp'
 ts = pd.to_datetime(df[TIME_COL])
 ts_diff = ts.diff().dropna()
 
@@ -178,45 +178,39 @@ print()
 # 6. HISTOGRAM DISTRIBUSI
 #    -> dikelompokkan per kategori sensor
 # ============================================================
-CATEGORIES = {
-    'Environment': ['ambient_temp_c', 'process_temp_c', 'ambient_humidity_pct', 'pressure_kpa'],
-    'HVAC': ['airflow_rate_m3h', 'fan_speed_rpm', 'exhaust_damper_pct', 'intake_damper_pct',
-             'heater_power_kw', 'chiller_load_pct'],
-    'Vibration': [c for c in num_df.columns if c.startswith('vibration_')],
-    'Gas': [c for c in num_df.columns if c.startswith('gas_raw_')],
-    'Index/Score & Air Quality': ['room_occupancy_index', 'process_load_index', 'leak_risk_score',
-                                  'o2_pct', 'co2_ppm', 'co_ppm'],
-}
-# Pastikan tidak ada kolom numerik yang terlewat / salah nama
-assert sorted(sum(CATEGORIES.values(), [])) == sorted(num_df.columns), "Kategori kolom tidak cocok dengan dataset"
 
-for g, (cat, cols) in enumerate(CATEGORIES.items(), start=1):
-    ncol = 5 if len(cols) > 6 else 3
+sensor_cols = [c for c in num_df.columns if c.startswith('sensor_')]
+group_size = 12
+n_groups = int(np.ceil(len(sensor_cols) / group_size))
+
+for g in range(n_groups):
+    cols = sensor_cols[g * group_size : (g+1) * group_size]
+    ncol = 4
     nrow = int(np.ceil(len(cols) / ncol))
-    fig, axes = plt.subplots(nrow, ncol, figsize=(4 * ncol, 3 * nrow), squeeze=False)
-    for ax, col in zip(axes.flatten(), cols):
-        ax.hist(num_df[col], bins=50, edgecolor='none')
-        ax.set_title(col, fontsize=9)
-        ax.tick_params(labelsize=7)
-    for ax in axes.flatten()[len(cols):]:
-        ax.set_visible(False)
-    fig.suptitle(f'Histogram Distribusi - {cat}', fontsize=13)
-    plt.tight_layout()
-    plt.savefig(f"{FIG_DIR}/histogram_group{g}.png", dpi=150)
-    plt.close()
-print(f"Histogram per kategori tersimpan sebagai {FIG_DIR}/histogram_group*.png ({len(CATEGORIES)} file)")
+
+    fig, axes = plt.subplots(nrow, ncol, figsize=(3* ncol, 2.5 * nrow), squeeze=False)
+    for ax, col in zip(axes.flatten(), cols):                                                                                          
+        ax.hist(num_df[col], bins=50, edgecolor='none')                                                                                
+        ax.set_title(col, fontsize=9)                                                                                                  
+    for ax in axes.flatten()[len(cols):]:                                                                                              
+        ax.set_visible(False)                                                                                                          
+                                                                                                                                           
+    fig.suptitle(f'Histogram Distribusi - Grup {g+1}', fontsize=13)                                                                    
+    plt.tight_layout()                                                                                                                 
+    plt.savefig(f"{FIG_DIR}/histogram_group{g+1}.png", dpi=150)                                                                        
+    plt.close()                                                                                                                        
+                                                                                                                                           
+print(f"Histogram tersimpan sebagai {FIG_DIR}/histogram_group*.png")                                                                   
 print()
 
 # ============================================================
 # 7. ANALISIS TIME-SERIES
 #    -> line chart terhadap waktu + autocorrelation function (ACF)
 # ============================================================
+
+sensor_cols = [c for c in num_df.columns if c.startswith('sensor_')]
 TS_SENSORS = {
-    'Environment': 'ambient_temp_c',
-    'HVAC': 'heater_power_kw',
-    'Vibration': 'vibration_axis1_mm_s',
-    'Gas': 'gas_raw_sensor1_mv',
-    'Air Quality': 'co2_ppm',
+    f"Sample {i + 1}" : col for i, col in enumerate(sensor_cols[:5])
 }
 ROLL_WINDOW = 60   # rolling mean 60 menit, untuk memperlihatkan tren di balik noise
 MAX_LAG = 60       # ACF sampai lag 60 menit
