@@ -1,4 +1,8 @@
 """
+ARSIP v1: membaca cleaned_sensor.csv (interpolasi penuh, versi lama) dan menulis ke
+outputs/archive_cleaning_v1/. Hasilnya tidak berlaku lagi; pakai analysis_nan_aware.py
+dan acf_multiscale_nan_aware.py untuk data v2. Dipertahankan agar hasil lama dapat direproduksi.
+
     Tahap 2: Data Understanding & Preprocessing Plan
     UTS Data Mining - Analisis Karakteristik Data Sensor Industrial IoT
 
@@ -23,8 +27,10 @@ from sklearn.decomposition import PCA
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent   # root project (bisa dijalankan dari folder mana saja)
 DATASET_PATH = BASE_DIR / "data" / "cleaned_sensor.csv"
-FIG_DIR = BASE_DIR / "outputs" / "figures"          # gambar .png
-TABLE_DIR = BASE_DIR / "outputs" / "tables"         # tabel .csv / .txt
+FIG_DIR = BASE_DIR / "outputs" / "archive_cleaning_v1" / "figures"          # gambar .png
+TABLE_DIR = BASE_DIR / "outputs" / "archive_cleaning_v1" / "tables"         # tabel .csv / .txt
+FIG_DIR.mkdir(parents=True, exist_ok=True)
+TABLE_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============================================================
 # 1. LOAD DATA

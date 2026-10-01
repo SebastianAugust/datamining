@@ -1,0 +1,3 @@
+PC1 explained variance ratio : 0.350167
+PC2 explained variance ratio : 0.222046
+Kumulatif PC1+PC2            : 0.572213

@@ -1,0 +1,63 @@
+Jumlah baris                          : 220320
+Jumlah kolom total                    : 51
+Jumlah kolom numerik                  : 50
+Total missing values                  : 0
+Baris duplikat (semua kolom)          : 0
+Baris duplikat (tanpa timestamp)      : 2693
+Timestamp duplikat                    : 0
+Rentang waktu                         : 2018-04-01 00:00:00 s/d 2018-08-31 23:59:00
+Interval antar baris != 1 menit       : 0
+
+Tipe data, missing, dan jumlah nilai unik per kolom:
+             dtype  n_missing  n_unique
+timestamp      str          0    220320
+sensor_00  float64          0     11443
+sensor_01  float64          0      1184
+sensor_02  float64          0       836
+sensor_03  float64          0       602
+sensor_04  float64          0      7860
+sensor_05  float64          0    190764
+sensor_06  float64          0      1304
+sensor_07  float64          0      1311
+sensor_08  float64          0      1343
+sensor_09  float64          0      5083
+sensor_10  float64          0    198823
+sensor_11  float64          0    196382
+sensor_12  float64          0    187159
+sensor_13  float64          0    191998
+sensor_14  float64          0     94578
+sensor_16  float64          0    110536
+sensor_17  float64          0    148015
+sensor_18  float64          0    152615
+sensor_19  float64          0    100436
+sensor_20  float64          0     92144
+sensor_21  float64          0    131098
+sensor_22  float64          0    126413
+sensor_23  float64          0    119301
+sensor_24  float64          0    133792
+sensor_25  float64          0    166013
+sensor_26  float64          0    179734
+sensor_27  float64          0    203214
+sensor_28  float64          0    189293
+sensor_29  float64          0    201977
+sensor_30  float64          0      2329
+sensor_31  float64          0      2700
+sensor_32  float64          0    205481
+sensor_33  float64          0    200870
+sensor_34  float64          0    203910
+sensor_35  float64          0    201797
+sensor_36  float64          0    201453
+sensor_37  float64          0    188914
+sensor_38  float64          0       625
+sensor_39  float64          0       931
+sensor_40  float64          0       897
+sensor_41  float64          0       618
+sensor_42  float64          0       722
+sensor_43  float64          0       734
+sensor_44  float64          0       650
+sensor_45  float64          0       695
+sensor_46  float64          0       859
+sensor_47  float64          0       643
+sensor_48  float64          0      1457
+sensor_49  float64          0       849
+sensor_51  float64          0      1131

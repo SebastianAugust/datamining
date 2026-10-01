@@ -1,0 +1,11 @@
+# lingkungan & cache
+venv/
+__pycache__/
+
+# dokumen review internal (tidak di-commit)
+REVIEW_EDA.md
+
+# file data > 50 MB (lihat data/README.md untuk cara membuatnya)
+data/sensor.csv
+data/cleaned_sensor.csv
+data/cleaned_sensor_v2.csv

@@ -1,0 +1,7 @@
+=== RINGKASAN DATA CLEANING ===
+Dataset Sumber        : sensor.csv
+Kolom Dihapus         : Unnamed: 0, sensor_15, sensor_50, machine_status
+Total Baris Akhir     : 220320
+Total Kolom Akhir     : 51
+Sisa Missing Values   : 0
+Total Baris Duplikasi : 0

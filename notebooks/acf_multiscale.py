@@ -1,4 +1,8 @@
 """
+ARSIP v1: membaca cleaned_sensor.csv (interpolasi penuh, versi lama) dan menulis ke
+outputs/archive_cleaning_v1/. Hasilnya tidak berlaku lagi; pakai analysis_nan_aware.py
+dan acf_multiscale_nan_aware.py untuk data v2. Dipertahankan agar hasil lama dapat direproduksi.
+
 Tahap 2 (lanjutan): ACF Multi-Skala Waktu
 UTS Data Mining - Analisis Karakteristik Data Sensor Industrial IoT
 
@@ -24,8 +28,10 @@ from statsmodels.graphics.tsaplots import plot_acf
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent   # root project (bisa dijalankan dari folder mana saja)
 DATASET_PATH = BASE_DIR / "data" / "cleaned_sensor.csv"
-FIG_DIR = BASE_DIR / "outputs" / "figures"          # gambar .png
-TABLE_DIR = BASE_DIR / "outputs" / "tables"         # tabel .csv / .txt
+FIG_DIR = BASE_DIR / "outputs" / "archive_cleaning_v1" / "figures"          # gambar .png
+TABLE_DIR = BASE_DIR / "outputs" / "archive_cleaning_v1" / "tables"         # tabel .csv / .txt
+FIG_DIR.mkdir(parents=True, exist_ok=True)
+TABLE_DIR.mkdir(parents=True, exist_ok=True)
 
 SENSORS = ['sensor_00', 'sensor_01', 'sensor_02', 'sensor_03', 'sensor_04']
 SCALES = {'1m': '1min', '5m': '5min', '15m': '15min', '30m': '30min', '60m': '60min'}
@@ -79,7 +85,7 @@ summary.to_csv(f"{TABLE_DIR}/acf_multiscale_summary.csv", index=False)
 for col in SENSORS:
     fig, axes = plt.subplots(1, len(SCALES), figsize=(4.2 * len(SCALES), 4), sharey=True)
     for ax, (label, data) in zip(axes, resampled.items()):
-        plot_acf(data[col], lags=MAX_LAG, alpha=ALPHA, zero=False, auto_ylims=True, ax=ax,
+        plot_acf(data[col], lags=MAX_LAG, alpha=ALPHA, zero=False, auto_ylims=True, fft=True, ax=ax,
                  title=f'{col}\nskala {label} (n={len(data)})')
         ax.set_xlabel(f'lag (x {label})')
         ax.title.set_fontsize(10)

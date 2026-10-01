@@ -1,0 +1,6 @@
+BATAS_MENIT,celah_diinterpolasi,sel_diinterpolasi,celah_tetap_kosong,sel_tetap_kosong,dipilih
+5,337,515,100,31339,False
+10,402,1032,35,30822,False
+15,412,1171,25,30683,True
+30,415,1244,22,30610,False
+60,420,1465,17,30389,False
