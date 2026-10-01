@@ -1,0 +1,146 @@
+PENJELASAN PROJECT (untuk bahan presentasi)
+UTS Data Mining - Klasterisasi Unsupervised pada Pump Sensor Data
+==========================================================================
+
+1. GAMBARAN BESAR
+-----------------
+Tujuan : mengelompokkan (clustering) kondisi operasi pompa industri dari data sensor,
+         tanpa label (unsupervised).
+Dataset: Pump Sensor Data (Kaggle: nphantawee/pump-sensor-data)
+Status : yang sudah selesai baru Tahap 2 (data understanding + data cleaning + analisis
+         karakter data). Windowing (Tahap 3) dan klasterisasi sendiri BELUM dikerjakan di repo ini.
+Pertanyaan yang dijawab sejauh ini: "data ini seperti apa, bolong di mana, dan
+         bagaimana menyiapkannya supaya layak dipakai untuk klasterisasi time-series?"
+
+2. DATASET
+----------
+ - 220.320 baris, 1 baris per menit, 2018-04-01 00:00 s/d 2018-08-31 23:59 (5 bulan)
+ - 52 sensor (sensor_00 .. sensor_51) + timestamp + machine_status (NORMAL 205.836,
+   RECOVERING 14.477, BROKEN 7)
+ - Timestamp rapi: tanpa baris hilang, tanpa duplikat
+ - machine_status sengaja TIDAK dipakai di pipeline (ini unsupervised; label hanya boleh
+   dipakai untuk evaluasi/pembanding, bukan untuk keputusan cleaning)
+
+3. ALUR PIPELINE
+----------------
+  sensor.csv (mentah)
+     |
+     v  missing_analysis.py      -> pahami pola data kosong (K3)
+     |
+     v  data_cleaning.py         -> buang sensor tak layak, isi celah pendek (K2)
+     |
+  cleaned_sensor_v2.csv  (49 sensor, masih ada NaN di celah panjang)
+     |
+     v  analysis_nan_aware.py        statistik, korelasi, outlier, PCA, ACF
+     v  acf_multiscale_nan_aware.py  ACF di beberapa skala waktu
+     v  acf_all_sensors.py           ACF semua sensor + ADF + diff
+     v  before_after_evidence.py     bukti kenapa versi baru lebih benar
+     |
+     v  (BERIKUTNYA) Tahap 3: windowing -> fitur -> klasterisasi
+
+4. MASALAH DATA KOSONG (inti perbaikan K2/K3)
+---------------------------------------------
+Temuan pada data mentah:
+ - sensor_15 kosong 100% -> dibuang
+ - sensor_50 mati permanen sejak 2018-07-09 (35% kosong) -> dibuang
+ - sensor_51 punya celah ~10,7 hari di Juni -> dibuang
+ - sensor_00, 06, 07, 08, 09 punya celah panjang yang waktunya sering sama (mis. 30 Juni)
+ - 456 celah kosong total; 96% di antaranya <= 15 menit (glitch sesaat)
+
+Kesalahan versi lama: semua celah diisi interpolasi linier. Celah 4 hari diisi garis
+lurus -> data palsu, ACF menggelembung.
+
+Solusi versi baru:
+ - celah pendek (<= 15 menit) : interpolasi linier (aman, kemungkinan glitch)
+ - celah panjang (> 15 menit) : dibiarkan kosong (NaN). Jujur terhadap data.
+ - Jangan pakai interpolate(limit=N): itu hanya mengisi N baris pertama celah dan
+   meninggalkan potongan garis lurus di ujungnya.
+Mengapa 15? 96% celah <= 15 menit. Ekor distribusi kontinu, jadi ini batas praktis,
+bukan pemisah alami. Hasil tidak sensitif (15 -> 60 menit cuma ubah 294 dari ~10,8 juta
+sel). Nilainya bisa diubah di notebooks/common.py.
+
+Konsekuensi NaN yang tersisa: tiap analisis harus menanganinya secara eksplisit:
+ - statistik/outlier : pakai nilai yang ada per kolom
+ - korelasi          : pairwise
+ - ACF               : di dalam segmen kontigu tanpa NaN (tidak melintasi celah)
+ - PCA               : hanya baris lengkap (94,84% baris tersisa, cukup)
+ - nanti di windowing: window yang terlalu banyak NaN dibuang
+
+5. ANALISIS KARAKTER DATA (hasil)
+---------------------------------
+Korelasi : 183 pasangan sensor dengan |r| > 0,7 -> banyak sensor redundan, cocok untuk
+           reduksi dimensi.
+PCA      : PC1 36,1%, PC2 16,9% (total 53%); butuh 15 komponen untuk 90% varians ->
+           struktur data cukup tersebar, tidak hanya 2 dimensi.
+ACF      : semua 49 sensor punya ACF lag-1 > 0,9 -> nilai sekarang sangat bergantung pada
+           menit sebelumnya (data sangat persisten). ACF multi-skala: ketergantungan
+           menurun saat data diagregasi ke skala lebih kasar (sensor_00: 0,99 pada 1 menit
+           jadi 0,93 pada 60 menit).
+ADF      : 48 sensor stasioner, 1 tidak (sensor_02). Catatan: n sangat besar sehingga uji
+           mudah menolak H0; artinya "tidak ada bukti unit root", bukan "tanpa tren".
+Diff     : setelah diff orde 1, ACF lag-1 turun > 0,5 pada 38 sensor -> sebagian besar
+           ketergantungan tinggi berasal dari tren/level, bukan gerakan jangka pendek.
+           11 sensor (38-49 kecuali 44) tetap 0,66-0,81; penyebab belum diselidiki.
+Implikasi: karena data sangat persisten, klasterisasi per-baris akan menganggap menit
+           berdekatan "mirip" secara otomatis. Pertimbangkan windowing dan/atau fitur
+           perubahan (diff) di Tahap 3.
+
+6. STRUKTUR FOLDER
+------------------
+ data/        dataset (tidak di-git karena > 50 MB; cara unduh di data/README.md)
+ notebooks/   semua script Python
+ outputs/figures, outputs/tables   hasil v2 (aktif)
+ outputs/archive_cleaning_v1/      hasil versi lama (tidak berlaku, disimpan sebagai arsip)
+ docs/        laporan perubahan, diagram PRISMA, gap analysis
+ requirements.txt, README.md, .gitignore
+
+7. CARA MENJALANKAN
+-------------------
+ pip install -r requirements.txt
+ (unduh sensor.csv ke data/)
+ python notebooks/data_cleaning.py
+ python notebooks/missing_analysis.py
+ python notebooks/analysis_nan_aware.py
+ python notebooks/acf_multiscale_nan_aware.py
+ python notebooks/acf_all_sensors.py
+ python notebooks/before_after_evidence.py
+ (opsional) python notebooks/compare_missing_vs_status.py
+
+8. ISTILAH PENTING
+------------------
+ Interpolasi linier : mengisi nilai kosong dengan garis lurus antara dua nilai di
+                      sisi celah.
+ Celah (gap)        : deretan menit berurutan yang kosong pada satu sensor.
+ ACF                : korelasi sebuah deret dengan dirinya sendiri pada selisih waktu
+                      (lag) tertentu. Tinggi = nilai sekarang mirip nilai sebelumnya.
+ ADF                : uji stasioneritas; H0 = ada unit root (tidak stasioner).
+ Diff orde 1        : x(t) - x(t-1); membuang tren/level.
+ PCA                : reduksi dimensi; menyisakan arah dengan varians terbesar.
+ Pairwise           : korelasi tiap pasangan dihitung dari baris yang kedua nilainya ada.
+ Unsupervised       : tanpa label; machine_status tidak dipakai untuk melatih/memutuskan.
+
+9. POIN CERITA UNTUK PRESENTASI
+-------------------------------
+ 1. Mulai dari data mentah, bukan langsung modeling: cek timestamp, pola data kosong.
+ 2. Temuan: data kosong tidak acak; ada sensor mati dan celah panjang bersamaan.
+ 3. Kesalahan awal (interpolasi semua) dan buktinya (plot 3 panel sensor_00:
+    outputs/figures/evidence_sensor_00_3panel.png).
+ 4. Keputusan berbasis data (histogram celah + tabel sensitivitas), bukan tebakan.
+ 5. Konsistensi: tidak memakai label machine_status untuk cleaning.
+ 6. Karakter data (korelasi tinggi, PCA, ACF) menentukan strategi Tahap 3.
+ Gambar yang cocok ditampilkan: missing_heatmap.png, gap_length_histogram.png,
+ evidence_sensor_00_3panel.png, v2_correlation_heatmap.png, v2_pca_preview.png.
+
+10. PERTANYAAN YANG MUNGKIN DITANYA DOSEN
+-----------------------------------------
+ - Kenapa tidak mengisi semua NaN? -> mengarang data 4-10 hari menciptakan pola palsu.
+ - Kenapa batas 15 menit? -> 96% celah <= 15 menit; hasil tidak sensitif; bisa diubah.
+ - Kenapa sensor_51 dibuang padahal hanya 7% kosong? -> satu celah 10,7 hari tidak bisa
+   diimputasi secara jujur.
+ - Kenapa machine_status tidak dipakai? -> unsupervised; label hanya untuk pembanding.
+ - Apa efek perbaikan pada ACF? -> lag-1 sensor_00 turun 0,9997 -> 0,9945 (kecil);
+   perbaikan terlihat jelas pada plot dan pada penghapusan data karangan.
+ - Apa yang belum dikerjakan? -> windowing, fitur, klasterisasi, evaluasi (Tahap 3+).
+
+Catatan: dokumen ini merangkum isi repo dan hasil yang sudah dihitung; bagian yang belum
+dikerjakan ditandai jelas. Rincian angka ada di docs/CHANGES_K2_K3.md.

@@ -1,0 +1,88 @@
+RANGKUMAN PERUBAHAN: commit c945f2e dibanding versi git sebelumnya (ca055e0)
+Branch: fix/k2-k3-missing-values (belum di-push)
+==========================================================================
+
+MASALAH YANG DIPERBAIKI
+-----------------------
+K2: data cleaning lama mengisi SEMUA data kosong dengan interpolasi linier, termasuk celah
+    panjang (sensor_00 hilang 4,2 hari, sensor_51 hilang 10,7 hari). Akibatnya muncul garis
+    lurus buatan di plot dan ACF lag-1 jadi hampir 1,0 secara palsu.
+K3: data kosong mentah tidak pernah dianalisis/didokumentasikan (data_overview lama
+    melaporkan 0 missing karena dihitung SETELAH diisi).
+
+1. DATA CLEANING (notebooks/data_cleaning.py, diubah)
+-----------------------------------------------------
+Sebelum : drop sensor_15, sensor_50; interpolasi linier semua celah; bfill + ffill sisa.
+Sesudah :
+ - drop sensor_15, sensor_50, sensor_51 (+ kolom indeks "Unnamed: 0")
+     sensor_15 : kosong 100%
+     sensor_50 : mati sejak 2018-07-09 12:44 sampai akhir data (35% kosong)
+     sensor_51 : celah 15.356 menit (~10,7 hari) di bulan Juni
+ - machine_status tidak dibaca sama sekali (pakai usecols)
+ - reindex ke grid 1 menit penuh supaya panjang celah = menit nyata
+ - interpolasi linier HANYA untuk celah <= BATAS_MENIT (15 menit), logika run-length
+ - celah panjang dibiarkan NaN (tidak diisi mean/median/ffill/bfill)
+ - output ke data/cleaned_sensor_v2.csv dan cleaning_summary_v2.txt
+   (file versi lama cleaned_sensor.csv tidak ditimpa)
+ - ada TODO untuk Tahap 3: window dengan terlalu banyak NaN dibuang saat windowing
+
+Angka: dari 31.854 sel kosong (49 sensor), hanya 1.171 diinterpolasi; 30.683 tetap NaN.
+
+2. FILE KODE BARU (notebooks/)
+------------------------------
+ common.py                    BATAS_MENIT (=15, satu-satunya tempat mengubahnya),
+                              daftar sensor dibuang, fungsi ACF per segmen tanpa NaN
+ missing_analysis.py          analisis data mentah: missing per kolom/bulan, heatmap,
+                              cek timestamp, daftar celah, histogram panjang celah,
+                              tabel sensitivitas BATAS_MENIT (5/10/15/30/60)
+ analysis_nan_aware.py        analisis hilir yang menangani NaN secara eksplisit:
+                              statistik, outlier IQR, korelasi pairwise, ACF per segmen,
+                              PCA (baris lengkap saja), overview, histogram, boxplot,
+                              scatter, time-series. Semua output berawalan v2_
+ acf_multiscale_nan_aware.py  ACF multi-skala (1m/5m/15m/30m/60m) tanpa menyambung celah
+ acf_all_sensors.py           ACF lag 1/5/15/60 untuk 49 sensor + uji ADF + ACF setelah diff
+ before_after_evidence.py     bukti sensor_00: plot 3 panel (mentah / lama / baru),
+                              tabel ACF lag-1, hitungan sel per sensor
+ compare_missing_vs_status.py analisis pembanding TERPISAH: % kosong per machine_status.
+                              Tidak dipakai untuk keputusan cleaning, tidak di-import
+                              script lain
+
+3. FILE KODE LAMA YANG DIUBAH
+----------------------------
+ data_understanding.py, acf_multiscale.py : sekarang ditandai ARSIP v1. Tetap membaca
+   cleaned_sensor.csv (lama) tetapi menulis ke outputs/archive_cleaning_v1/, jadi tidak
+   bentrok dengan output v2. Juga ada perbaikan dari sesi sebelumnya (pembuatan folder
+   output otomatis, FFT pada ACF, path relatif).
+
+4. OUTPUT
+---------
+ - Hasil lama (20 gambar + 8 tabel) DIPINDAH, tidak dihapus, ke outputs/archive_cleaning_v1/
+ - Hasil baru di outputs/figures dan outputs/tables:
+     missing_*.csv/png, gap_*.csv/png, sensitivity_batas_menit.csv, timestamp_check.txt,
+     v2_*.csv/png/txt, acf_all_sensors*.csv/txt, evidence_*, missing_vs_status_comparison.csv
+
+5. DOKUMENTASI & GIT
+--------------------
+ - docs/CHANGES_K2_K3.md : laporan keputusan, angka kunci, pertanyaan terbuka
+ - data/README.md        : cara unduh dataset Kaggle + cara membuat cleaned_sensor_v2.csv
+ - README.md             : cara menjalankan diperbarui
+ - .gitignore (baru)     : venv/, __pycache__/, REVIEW_EDA.md, dan 3 CSV di data/ (>50 MB)
+ - Yang ikut commit: 88 file, 5,8 MB. Dataset dan REVIEW_EDA.md TIDAK ikut.
+
+HASIL UTAMA SETELAH PERUBAHAN
+-----------------------------
+ - BATAS_MENIT = 15: 440 dari 456 celah (96%) <= 15 menit. Ekor distribusi kontinu (bukan
+   pemisah alami). Hasil tidak sensitif: 15 -> 60 menit hanya ubah 294 dari ~10,8 juta sel.
+ - PCA: 208.962 dari 220.320 baris lengkap (94,84%). PC1 36,1%, PC2 16,9%, 15 komponen
+   untuk 90% varians (versi lama: PC1 35,0%, PC2 22,2%, data berbeda).
+ - Pasangan |r| > 0,7: 183 (lama 201).
+ - ACF lag-1 sensor_00: 0,9997 (lama) -> 0,9945 (baru); mentah 0,9890. Selisih kecil karena
+   sensor sangat persisten per menit; dampak paling jelas ada di plot (garis lurus hilang).
+ - Semua 49 sensor ACF lag-1 > 0,9; 1 sensor tidak stasioner (sensor_02); 38 sensor ACF
+   turun > 0,5 setelah diff.
+
+BELUM DIPUTUSKAN
+----------------
+ - Ambang NaN per window di Tahap 3
+ - Penyebab 11 sensor (38-49 kecuali 44) yang ACF-nya tetap tinggi setelah diff
+ - Perlu tidaknya script arsip v1 dipertahankan
