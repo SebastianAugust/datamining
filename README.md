@@ -1,6 +1,6 @@
-# UTS Data Mining - Industrial IoT
+# UTS Data Mining - Pump Sensor Data
 
-Analisis karakteristik data sensor Industrial IoT (data understanding, ACF, PCA preview).
+Analisis karakteristik data sensor pompa, Pump Sensor Data (data understanding, ACF, PCA preview).
 
 ## Struktur folder
 
@@ -38,5 +38,4 @@ python notebooks/before_after_evidence.py      # bukti sebelum/sesudah
 python notebooks/compare_missing_vs_status.py  # analisis pembanding (terpisah dari pipeline)
 ```
 
-`data_understanding.py` dan `acf_multiscale.py` adalah arsip versi lama (data diinterpolasi penuh);
-hasilnya ada di `outputs/archive_cleaning_v1/`. Ringkasan perubahan dan keputusan: `docs/CHANGES_K2_K3.md`.
+Script dan hasil analisis versi lama (data diinterpolasi penuh): dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1. Ringkasan perubahan dan keputusan: `docs/CHANGES_K2_K3.md`.

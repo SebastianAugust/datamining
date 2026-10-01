@@ -18,7 +18,8 @@ Nama file yang diharapkan: `data/sensor.csv` (220.320 baris, interval 1 menit, 2
 | File | Dibuat oleh | Keterangan |
 |---|---|---|
 | `cleaned_sensor_v2.csv` | `notebooks/data_cleaning.py` | Versi aktif. Sensor_15/50/51 dibuang, celah <= `BATAS_MENIT` diinterpolasi, celah panjang tetap NaN. |
-| `cleaned_sensor.csv` | `data_cleaning.py` versi lama (commit `ca055e0`) | Versi lama, interpolasi penuh. Hanya dibaca oleh script arsip v1 (`data_understanding.py`, `acf_multiscale.py`). `before_after_evidence.py` merekonstruksinya dari data mentah. |
+
+File cleaning versi lama (interpolasi penuh): dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1. `before_after_evidence.py` merekonstruksinya dari data mentah.
 
 Menghasilkan `cleaned_sensor_v2.csv` dari `sensor.csv`:
 

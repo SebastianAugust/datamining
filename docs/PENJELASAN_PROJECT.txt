@@ -90,7 +90,6 @@ Implikasi: karena data sangat persisten, klasterisasi per-baris akan menganggap 
  data/        dataset (tidak di-git karena > 50 MB; cara unduh di data/README.md)
  notebooks/   semua script Python
  outputs/figures, outputs/tables   hasil v2 (aktif)
- outputs/archive_cleaning_v1/      hasil versi lama (tidak berlaku, disimpan sebagai arsip)
  docs/        laporan perubahan, diagram PRISMA, gap analysis
  requirements.txt, README.md, .gitignore
 

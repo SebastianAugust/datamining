@@ -1,3 +1,4 @@
+CATATAN: dokumen ini bersifat historis untuk commit c945f2e; beberapa file yang disebut di dalamnya telah dihapus kemudian (versi terakhir tersedia di git tag archive-cleaning-v1).
 RANGKUMAN PERUBAHAN: commit c945f2e dibanding versi git sebelumnya (ca055e0)
 Branch: fix/k2-k3-missing-values (belum di-push)
 ==========================================================================
@@ -23,7 +24,7 @@ Sesudah :
  - interpolasi linier HANYA untuk celah <= BATAS_MENIT (15 menit), logika run-length
  - celah panjang dibiarkan NaN (tidak diisi mean/median/ffill/bfill)
  - output ke data/cleaned_sensor_v2.csv dan cleaning_summary_v2.txt
-   (file versi lama cleaned_sensor.csv tidak ditimpa)
+   (file cleaning versi lama tidak ditimpa)
  - ada TODO untuk Tahap 3: window dengan terlalu banyak NaN dibuang saat windowing
 
 Angka: dari 31.854 sel kosong (49 sensor), hanya 1.171 diinterpolasi; 30.683 tetap NaN.
@@ -49,14 +50,13 @@ Angka: dari 31.854 sel kosong (49 sensor), hanya 1.171 diinterpolasi; 30.683 tet
 
 3. FILE KODE LAMA YANG DIUBAH
 ----------------------------
- data_understanding.py, acf_multiscale.py : sekarang ditandai ARSIP v1. Tetap membaca
-   cleaned_sensor.csv (lama) tetapi menulis ke outputs/archive_cleaning_v1/, jadi tidak
-   bentrok dengan output v2. Juga ada perbaikan dari sesi sebelumnya (pembuatan folder
+ Script analisis versi lama ditandai ARSIP v1 dan menulis ke folder arsip, jadi tidak
+   bentrok dengan output v2 (dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1). Juga ada perbaikan dari sesi sebelumnya (pembuatan folder
    output otomatis, FFT pada ACF, path relatif).
 
 4. OUTPUT
 ---------
- - Hasil lama (20 gambar + 8 tabel) DIPINDAH, tidak dihapus, ke outputs/archive_cleaning_v1/
+ - Hasil lama (20 gambar + 8 tabel) DIPINDAH, tidak dihapus, ke folder arsip (kemudian dihapus; lihat catatan di atas)
  - Hasil baru di outputs/figures dan outputs/tables:
      missing_*.csv/png, gap_*.csv/png, sensitivity_batas_menit.csv, timestamp_check.txt,
      v2_*.csv/png/txt, acf_all_sensors*.csv/txt, evidence_*, missing_vs_status_comparison.csv

@@ -44,15 +44,17 @@ Kode (`notebooks/`):
 - `data_cleaning.py` (diubah): drop sensor, reindex grid 1 menit, imputasi run-length. Output `cleaned_sensor_v2.csv`, `cleaning_summary_v2.txt`.
 - `missing_analysis.py` (baru): Bagian 1 dan 2.
 - `analysis_nan_aware.py` (baru): statistik, outlier, korelasi, ACF, PCA, overview, histogram, boxplot, scatter, time-series. Semua berawalan `v2_`.
-- `acf_multiscale_nan_aware.py` (baru): pengganti `acf_multiscale.py`.
+- `acf_multiscale_nan_aware.py` (baru): pengganti script ACF multi-skala versi lama (dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1).
 - `acf_all_sensors.py` (baru): ACF 49 sensor, ADF, ACF setelah diff.
-- `before_after_evidence.py` (baru): bukti sebelum/sesudah; cleaning lama direkonstruksi dari data mentah (selisih maks dengan `cleaned_sensor.csv` 2e-13).
+- `before_after_evidence.py` (baru): bukti sebelum/sesudah; cleaning lama direkonstruksi dari data mentah (selisih maks 2e-13 terhadap file cleaning lama).
 - `compare_missing_vs_status.py` (baru): satu-satunya yang membaca `machine_status`; tidak di-import siapa pun.
-- `data_understanding.py`, `acf_multiscale.py` (diarsipkan): tetap membaca `cleaned_sensor.csv` (v1) tetapi sekarang menulis ke `outputs/archive_cleaning_v1/`, sehingga tidak ada nama output yang bentrok dengan v2.
+- Script analisis versi lama (data diinterpolasi penuh) dan arsip hasilnya: dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1.
 
-Output: hasil lama dipindahkan (tidak dihapus) ke `outputs/archive_cleaning_v1/`. Output baru ada di `outputs/tables/` dan `outputs/figures/`. Daftar lengkap: lihat `git status` pada commit ini atau isi folder tersebut.
+Output: hasil lama dipindahkan ke folder arsip, lalu dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1. Output baru ada di `outputs/tables/` dan `outputs/figures/`. Daftar lengkap: lihat `git status` pada commit ini atau isi folder tersebut.
 
 Dokumentasi: `data/README.md` (cara mengunduh dataset dan membuat file cleaned), `.gitignore` (venv, `__pycache__`, `REVIEW_EDA.md`, tiga file CSV di `data/` yang masing-masing > 50 MB), `README.md` (diperbarui).
+
+Catatan: angka cleaning lama dapat dihasilkan ulang dengan `notebooks/before_after_evidence.py` (rekonstruksi dari data mentah, selisih maksimum 2e-13 terhadap file lama) atau dengan checkout git tag `archive-cleaning-v1`.
 
 ## 4. Angka kunci
 
@@ -92,4 +94,4 @@ Sumber: `acf_all_sensors.csv` dan `acf_all_sensors_summary.txt`. ACF dalam segme
 3. ADF memakai segmen terpanjang dan maxlag 24. Apakah cukup, atau perlu uji tambahan (mis. KPSS)?
 4. Ambang NaN per window untuk Tahap 3 (TODO di `data_cleaning.py`) belum diputuskan.
 5. BROKEN hanya 7 baris, jadi persentase per sensor di `missing_vs_status_comparison.csv` kasar; jangan disimpulkan darinya.
-6. Script arsip v1 masih butuh `cleaned_sensor.csv`, yang tidak ikut git; pembuatnya adalah versi `data_cleaning.py` di commit `ca055e0`. Apakah arsip v1 perlu dipertahankan sebagai script?
+6. (Terjawab) Arsip v1: dihapus pada branch chore/cleanup-repo; versi terakhir tersedia di git tag archive-cleaning-v1.
