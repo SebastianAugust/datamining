@@ -1,0 +1,9 @@
+Ringkasan ACF seluruh sensor (n sensor = 49); angka apa adanya, belum ditafsirkan.
+ACF lag-1 > 0.9                         : 49 sensor
+ADF: tidak stasioner (p >= 0.05)           : 1 sensor; stasioner: 48; n/a: 0
+ACF lag-1 turun > 0.5 setelah diff     : 38 sensor
+Irisan: lag-1 tinggi DAN turun drastis        : 38 sensor
+Irisan: lag-1 tinggi DAN tidak stasioner      : 1 sensor
+Median ACF lag-1 level / diff                 : 0.9971 / -0.0759
+Catatan: ADF dihitung pada segmen terpanjang tiap sensor (adf_n); pada n sangat besar uji ini cenderung
+menolak H0 untuk penyimpangan kecil. Ambang 'turun drastis' (0.5) adalah pilihan, bukan baku.

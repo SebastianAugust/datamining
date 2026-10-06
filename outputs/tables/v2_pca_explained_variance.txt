@@ -1,0 +1,3 @@
+Baris lengkap (semua 49 sensor ada): 208962 dari 220320 (94.84%)
+PC1=0.3614, PC2=0.1685, PC1+PC2=0.5299
+Komponen utk 90% varians: 15

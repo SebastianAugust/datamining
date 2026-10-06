@@ -1,0 +1,7 @@
+Rentang          : 2018-04-01 00:00:00 s/d 2018-08-31 23:59:00
+Baris di file    : 220320
+Baris grid 1 mnt : 220320
+Baris hilang     : 0
+Timestamp duplikat: 0
+Selisih != 1 menit: 0
+Panjang celah diukur dari grid 1 menit (timestamp), bukan jumlah baris.

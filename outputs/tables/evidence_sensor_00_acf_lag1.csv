@@ -1,0 +1,4 @@
+kondisi,acf_lag1_segmen,n_segmen,autocorr_pairwise
+mentah,0.989,9,0.9993
+cleaning lama (interpolasi penuh),0.9997,1,0.9997
+cleaning baru (v2),0.9945,5,0.9994

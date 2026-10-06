@@ -1,0 +1,57 @@
+Jumlah baris          : 220320
+Jumlah sensor         : 49
+Total sel NaN         : 30683 (0.284% dari sel)
+Timestamp duplikat    : 0
+Interval != 1 menit   : 0
+Rentang waktu         : 2018-04-01 00:00:00 s/d 2018-08-31 23:59:00
+
+           n_missing  n_unique
+sensor_00      10190      1253
+sensor_01        315       871
+sensor_02          0       836
+sensor_03          0       602
+sensor_04          0      7860
+sensor_05          0    190764
+sensor_06       4779       824
+sensor_07       5429       550
+sensor_08       5088       642
+sensor_09       4567       576
+sensor_10          0    198823
+sensor_11          0    196382
+sensor_12          0    187159
+sensor_13          0    191998
+sensor_14          0     94578
+sensor_16          0    110536
+sensor_17          0    148015
+sensor_18          0    152615
+sensor_19          0    100436
+sensor_20          0     92144
+sensor_21          0    131098
+sensor_22          0    126413
+sensor_23          0    119301
+sensor_24          0    133792
+sensor_25          0    166013
+sensor_26          0    179734
+sensor_27          0    203214
+sensor_28          0    189293
+sensor_29         41    201936
+sensor_30        239      2090
+sensor_31          0      2700
+sensor_32         35    205446
+sensor_33          0    200870
+sensor_34          0    203910
+sensor_35          0    201797
+sensor_36          0    201453
+sensor_37          0    188914
+sensor_38          0       625
+sensor_39          0       931
+sensor_40          0       897
+sensor_41          0       618
+sensor_42          0       722
+sensor_43          0       734
+sensor_44          0       650
+sensor_45          0       695
+sensor_46          0       859
+sensor_47          0       643
+sensor_48          0      1457
+sensor_49          0       849
