@@ -103,7 +103,7 @@ Persentasenya kecil dan klaster tidak diperkaya secara berarti pada kriteria jar
 | sensor_24 | 618,9 | 67,1 |
 | sensor_14 | 415,5 | 76,8 |
 
-Klaster 1 = window ketika level rata-rata banyak sensor turun jauh ke bawah (sekitar 10 sampai 20% dari level klaster 0) dengan variabilitas dalam-window biasa saja. Heatmap: `t3_cluster_profile.png`.
+Klaster 1 = window ketika level rata-rata banyak sensor turun jauh ke bawah (sekitar 7 sampai 21% dari level klaster 0 pada lima sensor di atas) dengan variabilitas dalam-window biasa saja. Heatmap: `t3_cluster_profile.png`.
 
 ## 7. Pembanding machine_status (`t3_compare_clusters_vs_status.py`)
 
