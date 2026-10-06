@@ -1,0 +1,11 @@
+label_set,bagian,klaster,NORMAL,RECOVERING,BROKEN,abnormal_min1,total,purity,purity_baseline_semua_ke_status_terbanyak,ARI,NMI,ARI_abnormal_min1,NMI_abnormal_min1
+utama,silang_klaster_x_status_mayoritas,0,6010.0,118.0,0.0,123.0,6128.0,,,,,,
+utama,silang_klaster_x_status_mayoritas,1,828.0,4.0,0.0,4.0,832.0,,,,,,
+utama,ringkasan,semua,,,,,,0.9824712643678161,0.9824712643678161,-0.019309804793427483,0.003790396455995233,-0.02029422212145498,0.004069707003629778
+sekunder,silang_klaster_x_status_mayoritas,0,5914.0,117.0,0.0,122.0,6031.0,,,,,,
+sekunder,silang_klaster_x_status_mayoritas,1,703.0,2.0,0.0,2.0,705.0,,,,,,
+sekunder,silang_klaster_x_status_mayoritas,2,221.0,3.0,0.0,3.0,224.0,,,,,,
+sekunder,ringkasan,semua,,,,,,0.9824712643678161,0.9824712643678161,-0.018785124091531023,0.0038868964696595404,-0.019821765315644106,0.004135329262145106
+-,window_dibuang_status_mayoritas,dibuang,23.0,361.0,0.0,361.0,384.0,,,,,,
+-,window_dipertahankan_status_mayoritas,dipertahankan,6838.0,122.0,0.0,127.0,6960.0,,,,,,
+-,window_dibuang_status_per_menit,dibuang,699.0,10820.0,1.0,,11520.0,,,,,,
