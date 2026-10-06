@@ -9,3 +9,6 @@ REVIEW_EDA.md
 data/sensor.csv
 data/cleaned_sensor.csv
 data/cleaned_sensor_v2.csv
+
+# fitur Tahap 3 (besar, dibuat ulang oleh t3_features.py)
+data/t3_*

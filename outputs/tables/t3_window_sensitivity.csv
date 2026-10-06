@@ -1,0 +1,4 @@
+window_menit,window_dipertahankan,window_total,komponen_pca,K_terpilih,K_sekunder,K_elbow,K_dbi_terbaik,silhouette_K_terpilih,dbi_K_terpilih,ukuran_klaster_min_persen,ARI_stabilitas_rata2,ARI_stabilitas_min,menit_dibandingkan,ARI_vs_30m_menit
+30,6960,7344,1,2,3,4,2,0.9547661529308107,0.14300368461367066,11.95,1.0,1.0,208800,1.0
+15,13925,14688,1,2,3,4,2,0.9550589804839462,0.13914385401434892,11.91,1.0,1.0,208755,0.9909266507245137
+60,3475,3672,1,2,3,4,2,0.9556968207839361,0.14143300023306543,11.94,1.0,1.0,208470,0.991348834210614

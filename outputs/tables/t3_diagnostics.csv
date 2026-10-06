@@ -1,0 +1,76 @@
+bagian,label_set,uraian,nilai
+a_waktu,utama,proporsi pasangan bersebelahan berlabel sama (observasi),0.9953950208663117
+a_waktu,utama,rata-rata 1000 permutasi,0.7894081162757232
+a_waktu,utama,persentil 95 permutasi,0.7934954669736652
+a_waktu,utama,p-value (>= observasi),0.000999000999000999
+a_waktu,utama,"klaster 0: rata-rata panjang run (window), jumlah run 26",235.69230769230768
+a_waktu,utama,"klaster 1: rata-rata panjang run (window), jumlah run 17",48.94117647058823
+a_waktu,sekunder,proporsi pasangan bersebelahan berlabel sama (observasi),0.9938120592891063
+a_waktu,sekunder,rata-rata 1000 permutasi,0.762163332853648
+a_waktu,sekunder,persentil 95 permutasi,0.7658655921715355
+a_waktu,sekunder,p-value (>= observasi),0.000999000999000999
+a_waktu,sekunder,"klaster 0: rata-rata panjang run (window), jumlah run 23",262.2173913043478
+a_waktu,sekunder,"klaster 1: rata-rata panjang run (window), jumlah run 10",70.5
+a_waktu,sekunder,"klaster 2: rata-rata panjang run (window), jumlah run 21",10.666666666666666
+b_drift_bulan,utama,2018-04 proporsi klaster 0 (n bulan=1303),0.9447429009976976
+b_drift_bulan,utama,2018-04 proporsi klaster 1 (n bulan=1303),0.05525709900230238
+b_drift_bulan,utama,2018-05 proporsi klaster 0 (n bulan=1458),0.5534979423868313
+b_drift_bulan,utama,2018-05 proporsi klaster 1 (n bulan=1458),0.44650205761316875
+b_drift_bulan,utama,2018-06 proporsi klaster 0 (n bulan=1360),0.9323529411764706
+b_drift_bulan,utama,2018-06 proporsi klaster 1 (n bulan=1360),0.06764705882352941
+b_drift_bulan,utama,2018-07 proporsi klaster 0 (n bulan=1351),0.999259807549963
+b_drift_bulan,utama,2018-07 proporsi klaster 1 (n bulan=1351),0.0007401924500370096
+b_drift_bulan,utama,2018-08 proporsi klaster 0 (n bulan=1488),0.989247311827957
+b_drift_bulan,utama,2018-08 proporsi klaster 1 (n bulan=1488),0.010752688172043012
+b_drift_bulan,sekunder,2018-04 proporsi klaster 0 (n bulan=1303),0.9270913277052955
+b_drift_bulan,sekunder,2018-04 proporsi klaster 1 (n bulan=1303),0.01918649270913277
+b_drift_bulan,sekunder,2018-04 proporsi klaster 2 (n bulan=1303),0.05372217958557176
+b_drift_bulan,sekunder,2018-05 proporsi klaster 0 (n bulan=1458),0.5233196159122085
+b_drift_bulan,sekunder,2018-05 proporsi klaster 1 (n bulan=1458),0.406721536351166
+b_drift_bulan,sekunder,2018-05 proporsi klaster 2 (n bulan=1458),0.06995884773662552
+b_drift_bulan,sekunder,2018-06 proporsi klaster 0 (n bulan=1360),0.9198529411764705
+b_drift_bulan,sekunder,2018-06 proporsi klaster 1 (n bulan=1360),0.05808823529411765
+b_drift_bulan,sekunder,2018-06 proporsi klaster 2 (n bulan=1360),0.022058823529411766
+b_drift_bulan,sekunder,2018-07 proporsi klaster 0 (n bulan=1351),0.9985196150999259
+b_drift_bulan,sekunder,2018-07 proporsi klaster 1 (n bulan=1351),0.0
+b_drift_bulan,sekunder,2018-07 proporsi klaster 2 (n bulan=1351),0.0014803849000740192
+b_drift_bulan,sekunder,2018-08 proporsi klaster 0 (n bulan=1488),0.9811827956989247
+b_drift_bulan,sekunder,2018-08 proporsi klaster 1 (n bulan=1488),0.005376344086021506
+b_drift_bulan,sekunder,2018-08 proporsi klaster 2 (n bulan=1488),0.013440860215053764
+b_drift_detrend,-,komponen PCA 90% setelah detrend,2.0
+b_drift_detrend,utama,ARI klaster detrend (K=2) vs asli,0.238922078292094
+b_drift_detrend,utama,Silhouette klaster detrend,0.9307343078863711
+b_drift_detrend,sekunder,ARI klaster detrend (K=3) vs asli,0.34251662138273453
+b_drift_detrend,sekunder,Silhouette klaster detrend,0.9488049775768698
+c_celah,-,jumlah window dipertahankan,6960.0
+c_celah,utama,dekat_celah_NaN_<=60mnt: keseluruhan (%),0.646551724137931
+c_celah,utama,dekat_celah_NaN_<=60mnt: klaster 0 (%),0.6527415143603132
+c_celah,utama,dekat_celah_NaN_<=60mnt: klaster 1 (%),0.6009615384615385
+c_celah,utama,mengandung_sel_interpolasi: keseluruhan (%),0.4166666666666667
+c_celah,utama,mengandung_sel_interpolasi: klaster 0 (%),0.3100522193211488
+c_celah,utama,mengandung_sel_interpolasi: klaster 1 (%),1.201923076923077
+c_celah,utama,salah_satu: keseluruhan (%),0.9770114942528736
+c_celah,utama,salah_satu: klaster 0 (%),0.8975195822454308
+c_celah,utama,salah_satu: klaster 1 (%),1.5625
+c_celah,sekunder,dekat_celah_NaN_<=60mnt: keseluruhan (%),0.646551724137931
+c_celah,sekunder,dekat_celah_NaN_<=60mnt: klaster 0 (%),0.663239927043608
+c_celah,sekunder,dekat_celah_NaN_<=60mnt: klaster 1 (%),0.7092198581560284
+c_celah,sekunder,dekat_celah_NaN_<=60mnt: klaster 2 (%),0.0
+c_celah,sekunder,mengandung_sel_interpolasi: keseluruhan (%),0.4166666666666667
+c_celah,sekunder,mengandung_sel_interpolasi: klaster 0 (%),0.3150389653457138
+c_celah,sekunder,mengandung_sel_interpolasi: klaster 1 (%),1.4184397163120568
+c_celah,sekunder,mengandung_sel_interpolasi: klaster 2 (%),0.0
+c_celah,sekunder,salah_satu: keseluruhan (%),0.9770114942528736
+c_celah,sekunder,salah_satu: klaster 0 (%),0.911954899684961
+c_celah,sekunder,salah_satu: klaster 1 (%),1.8439716312056738
+c_celah,sekunder,salah_satu: klaster 2 (%),0.0
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_21,0.9607465199917421
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_20,0.9590451951677538
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_19,0.9570085537568306
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_24,0.9405574539858881
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_22,0.9341270014827902
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_25,0.9270018921479469
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_23,0.9255514556834007
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_14,0.9141175805063219
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_16,0.9099371830792125
+d_profil,utama,sensor pembeda (maks eta2 antar 4 fitur): sensor_26,0.8666436172532701
